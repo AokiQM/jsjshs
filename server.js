@@ -277,8 +277,10 @@ app.get('/', (req, res) => {
       <script>
         const pwdParam = '?pwd=${ADMIN_PASSWORD}';
 
+        // 修复：正确拼接 pwd 参数（判断是否已有 ?）
         function apiFetch(url, options) {
-          return fetch(url + '&pwd=${ADMIN_PASSWORD}', options).then(r => r.json());
+          const separator = url.includes('?') ? '&' : '?';
+          return fetch(url + separator + 'pwd=${ADMIN_PASSWORD}', options).then(r => r.json());
         }
 
         // 生成卡密
